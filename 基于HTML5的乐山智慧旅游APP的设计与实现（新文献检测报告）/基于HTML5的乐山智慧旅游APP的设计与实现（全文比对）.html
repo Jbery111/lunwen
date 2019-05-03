@@ -1,0 +1,630 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>新文献检测报告（全文比对）</title>
+
+    <link href="./Report(该文件夹请勿删除影响报告阅读)/bootstrap.css" rel="stylesheet">
+    <link href="./Report(该文件夹请勿删除影响报告阅读)/report.css" rel="stylesheet">
+    <link href="./Report(该文件夹请勿删除影响报告阅读)/components.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        #part1 .row {
+            margin-bottom: 3px;
+        }
+
+        #checkrangelist {
+            float: left;
+            width: 660px;
+        }
+
+            #checkrangelist div {
+                width: 220px;
+                float: left;
+                height: 25px;
+            }
+
+        #bar1 {
+            margin: auto;
+            width: 800px;
+            position: relative;
+            height: 110px;
+        }
+
+
+        .bg-hover {
+            background-color: silver;
+        }
+
+        .tick {
+            width: 1px;
+            height: 15px;
+            background-color: #3FCBDB;
+            position: absolute;
+        }
+
+        .ticktext {
+            /*height: 20px;*/
+            /*color: #3FCBDB;*/
+            position: absolute;
+            font-size: 14px;
+        }
+
+        .block {
+            position: absolute;
+            top: 2px;
+        }
+
+        .small-rect {
+            width: 12px;
+            height: 12px;
+            border: 1px;
+            display: inline-block;
+            margin: 0 3px;
+        }
+
+        .block-hover {
+            border: solid 1px red;
+        }
+
+        body {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    </style>
+
+    <script>
+        var app = { Setting: { DomainConfig: {} } };
+        app.root = './report/';
+
+    </script>
+    <script>
+        /* 兼容IE8 Array.indexOf */
+        Array.prototype.indexOf = function (item) {
+            return _.indexOf(this, item);
+        };
+    </script>
+    <script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="text" src="./Report(该文件夹请勿删除影响报告阅读)/text.js"></script>
+    <script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="knockout" src="./Report(该文件夹请勿删除影响报告阅读)/knockout-3.4.0.js"></script>
+</head>
+<body>
+    <!-- 头部 -->
+    <div class="header" style="background-color:white;">
+        <div class="container" style="height:82px;">
+            <img src="./Report(该文件夹请勿删除影响报告阅读)/logo.png" style="margin: 25px 0 15px 70px;height:42px;">
+        </div>
+    </div>
+
+    <!-- 主要 -->
+    <div class="report-wrapper">
+        <div class="report-container">
+            <!-- 报告头部 -->
+            <div class="report-header">
+                <div class="title">新文献检测报告（全文比对）</div>
+                <hr class="hr-header">
+            </div>
+
+            <!-- 报告主体 -->
+            <div class="report-body">
+                <!-- 1、报告属性 -->
+                <div id="part1" class="section" style="background-color:#f4feff;">
+                    <div style="padding:15px 0">
+                        <div class="row">
+                            <div class="col-md-5 col-md-offset-1">
+                                <label>报告编号：</label><span>PL-20190425-468459CA-QW</span>
+                            </div>
+                            <div class="col-md-5 col-md-offset-1">
+                                <label>检测时间：</label><span>2019-04-25 09:09:25</span>
+                            </div>
+                            <div class="col-md-5 col-md-offset-1">
+                                <label>题　　名：</label><span>基于HTML5的乐山智慧旅游APP的设计与实现</span>
+                            </div>
+
+                            <div class="col-md-5 col-md-offset-1">
+                                <label>作　　者：</label><span>陈霜雪</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1">
+                                <label style="float:left;">检测范围：</label>
+                                <div id="checkrangelist">
+                                    <div>
+                                        <input type="checkbox" checked="checked" disabled="">中国学术期刊数据库
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" checked="checked" disabled="">中国学位论文全文数据库
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" checked="checked" disabled="">中国学术会议论文数据库
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" checked="checked" disabled="">中国学术网页数据库
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" checked="checked" disabled="">中国专利文献数据库
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" checked="checked" disabled="">中国优秀报纸数据库
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="part2">
+                    <h2>总相似比：<span style="color:red;" data-bind="text: copyPercentGraph() + '%'"></span></h2>
+                    <div style="font-size:13px;">
+                        <div class="row" style="height:24px;">
+                            <div class="col-md-4 col-md-offset-2">检测字数：<strong data-bind="numeral: originalCharacterTotal"></strong></div>
+                            <div class="col-md-4"></div>
+                        </div>
+                        <div class="row" style="height:24px;">
+                            <div class="col-md-4 col-md-offset-2">参考文献相似比：<strong class="text-reference" data-bind="text: copyPercents().referenceCopyPercent + '%'"></strong></div>
+                            <div class="col-md-1">/</div>
+                            <div class="col-md-4">排除参考文献相似比：<strong class="text-others" data-bind="text: copyPercents().unReferenceCopyPercent + '%'"></strong></div>
+                        </div>
+                        <div class="row" style="height:24px;">
+                            <div class="col-md-4 col-md-offset-2">可能引用本人已发表论文相似比：<strong class="text-published" data-bind="text: copyPercents().publishedCopyPercent + '%'"></strong></div>
+                            <div class="col-md-1">/</div>
+                            <div class="col-md-4">辅助排除本人已发表论文相似比：<strong class="text-others" data-bind="text: copyPercents().unPublishedCopyPercent + '%'"></strong></div>
+                        </div>
+                        <div class="row" style="height:24px;" data-bind="visible:('@ViewBag.ProductId' == 'PA'||'@ViewBag.ProductId' == 'PLPA'||'@ViewBag.ProductId' == 'ALPA')">
+                            <div class="col-md-4 col-md-offset-2">可能引用本人学位论文相似比：<strong class="text-degree" data-bind="text: copyPercents().degreeCopyPercent + '%'"></strong></div>
+                            <div class="col-md-1">/</div>
+                            <div class="col-md-4">辅助排除本人学位论文相似比：<strong class="text-others" data-bind="text: copyPercents().unDegreeCopyPercent + '%'"></strong></div>
+                        </div>
+                        <div class="row" style="height:24px;">
+                            <div class="col-md-8 col-md-offset-2">单篇论文最大相似比：<strong data-bind="text: MaxCopyPercentArticle().copyPercent + '%'"></strong>（<a data-bind="text: MaxCopyPercentArticle().title, attr: { href: MaxCopyPercentArticle().href }"></a>）</div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:10px;">
+                        <div class="col-md-12">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td width="60%" style="padding:0;text-align:center;">
+                                        <div style="line-height: 37px;font-weight:bold;">原文</div>
+                                    </td>
+                                    <td width="40%" style="padding:0;text-align:center;">
+                                        <div style="line-height: 37px;font-weight:bold;">相似片段</div>
+                                    </td>
+                                </tr>
+                                <tr style="font-size:12px;">
+                                    <td style="padding:0;">
+                                        <div style="padding:8px; height:600px;width:540px;overflow-y: auto;word-wrap:break-word;" id="fulltext">
+
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <table class="table table-bordered" data-bind="with: SimilarFragment">
+                                            <tr>
+                                                <td width="100%">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            片段相似比：<span style="color:red;">[<!-- ko text:(copyPercent * 100).toFixed('2') --><!-- /ko -->%]</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr data-bind="css: hasBanquan ? '' : 'text-nocopyright'">
+                                                <td>[<!-- ko text:DBID --><!-- /ko -->]<!-- ko text:title --><!-- /ko --></td>
+                                            </tr>
+                                            <tr data-bind="css: hasBanquan ? '' : 'text-nocopyright'">
+                                                <td>
+                                                    <div class="row">
+                                                        <div class="col-md-4" data-bind="text:creator"></div>
+                                                        <div class="col-md-4" data-bind="text:date"></div>
+                                                        <br />
+                                                        <div class="col-md-4" data-bind="text:source"></div>
+                                                    </div>
+                                            </tr>
+                                            <tr data-bind="css: hasBanquan ? '' : 'text-nocopyright'">
+                                                <td>
+                                                    <div style="height:440px; width:100%;overflow-y: auto;">
+                                                        <div style="text-align: center;font-size: 15px;font-weight: bold;line-height: 30px;">
+                                                            此片段相似字数（<!-- ko text:similarChars.length --><!-- /ko -->字）
+                                                        </div>
+                                                        <span data-bind="html: hasBanquan ? hitText : ''"></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <!-- ko ifnot: SimilarFragment -->
+                                        <div>
+                                            <p>文档中颜色标注说明：</p>
+                                            <p><div class="small-rect bg-others"></div><span class="text-others">红色</span>字体代表相似片段</p>
+                                            <p><div class="small-rect bg-reference"></div><span class="text-reference">绿色</span>字体代表参考文献相似片段</p>
+                                            <p><div class="small-rect bg-published"></div><span class="text-published">蓝色</span>字体代表可能引用本人已发表论文片段</p>
+                                            <p style="color:#E15A00;"><img sty src="./Report(该文件夹请勿删除影响报告阅读)/click.png" style="padding:2px;" />请点击文档中有颜色标注的文本内容查看相似片段详情</p>
+                                        </div>
+
+                                        <!-- /ko -->
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!--相似比为0-->
+                <div id="part2zero" style="display:none">
+                    <h2>检测结果</h2>
+                    <div style="height:220px;">
+                        <div style="width:400px;margin:40px auto 30px;">
+                            <div style="float:left;">
+                                <div id="graph1" data-bind="graphPie1: 0" style="width: 160px; height: 160px; margin: 20px; -webkit-tap-highlight-color: transparent; user-select: none; background: transparent;" _echarts_instance_="ec_1517366446953"><div style="position: relative; overflow: hidden; width: 160px; height: 160px;"><canvas width="160" height="160" data-zr-dom-id="zr_0" style="position: absolute; left: 0px; top: 0px; width: 160px; height: 160px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></canvas></div></div>
+                            </div>
+                            <div style="float:left;">
+                                <div id="graph2" class="container graph-originaltotal" style="width:200px;height:80px;margin:60px 0;">
+                                    <div class="row" style="margin-bottom:20px;">
+                                        <div class="col-md-6" style="text-align:right;padding-right:0;">检测字数</div>
+                                        <div class="col-md-6">
+                                            <span class="label label-main" data-bind="numeral: originalCharacterTotal"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6" style="text-align:right;padding-right:0;">原文总段落数</div>
+                                        <div class="col-md-6">
+                                            <span class="label label-main" data-bind="numeral: originalParagraphTotal"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 说明 -->
+                <div id="part7" style="font-size:12px;" class="row">
+                    <div class="col-md-8">
+
+
+                        <p>说明：</p>
+                        <p>1.送检文献总字数=送检文献的总字符数，包含汉字、非中文字符、标点符号、阿拉伯数字（不计入空格）</p>
+                        <p>2.总相似比=送检论文与检测范围全部数据相似部分的字数/检测总字符数</p>
+                        <p>3.参考文献相似比=送检论文与其参考文献相似部分的字数/检测总字符数</p>
+                        <p>4.辅助排除参考文献相似比=总相似比-参考文献相似比</p>
+                        <p>5.“单篇文献最大相似比”：送检文献与某一文献的相似比高于全部其他文献</p>
+                        <p>6.“是否引用”：某一相似文献是否被送检文献列为其参考文献</p>
+
+                    </div>
+                    <!-- ko if: SimilarFragment -->
+                    <div class="col-md-4">
+                        <p>文档中颜色标注说明：</p>
+                        <p><div class="small-rect bg-others"></div><span class="text-others">红色</span>字体代表相似片段</p>
+                        <p><div class="small-rect bg-reference"></div><span class="text-reference">绿色</span>字体代表参考文献相似片段</p>
+                        <p><div class="small-rect bg-published"></div><span class="text-published">蓝色</span>字体代表可能引用本人已发表论文片段</p>
+                        </p>
+                        <!-- ko if:('@ViewBag.ProductId' == 'PA'||'@ViewBag.ProductId' == 'PLPA'||'@ViewBag.ProductId' == 'ALPA') -->
+                        <p><div class="small-rect bg-degree"></div><span class="text-degree">黄色</span>字体代表可能引用本人学位论文片段</p>
+                        <!-- /ko -->
+                    </div>
+                    <!-- /ko -->
+                </div>
+
+            </div>
+
+            <!-- 报告尾部 -->
+            <div class="report-footer">
+                <hr class="hr-footer">
+                <div>
+                    <p>检测报告由万方数据文献相似性检测系统算法生成</p>
+                    <p>仅对您所选择的检测范围内检验结果负责，结果仅供参考</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./Report(该文件夹请勿删除影响报告阅读)/underscore-min.js"></script>
+    <script src="./Report(该文件夹请勿删除影响报告阅读)/jquery-1.12.4.min.js"></script>
+    <script src="./Report(该文件夹请勿删除影响报告阅读)/iframeResizer.contentWindow.min.js"></script>
+    <script src="./Report(该文件夹请勿删除影响报告阅读)/moment.min.js"></script>
+    <script src="./Report(该文件夹请勿删除影响报告阅读)/knockout-3.4.0.js"></script>
+    <script src="./Report(该文件夹请勿删除影响报告阅读)/bootstrap.min.js"></script>
+    <script src="./Report(该文件夹请勿删除影响报告阅读)/echarts.min.js"></script>
+    <script src="./Report(该文件夹请勿删除影响报告阅读)/numeral.min.js"></script>
+    <script src="./Report(该文件夹请勿删除影响报告阅读)/require.js"></script>
+    <script>
+        require.config({
+            paths: {
+                'knockout': app.root + 'Scripts/knockout-3.4.0',
+                'text': app.root + 'Scripts/text'
+            }
+        });
+
+        // To keep the network tab clear when the visitor is running live examples,
+        // preload the following.
+        require(['text', 'knockout'], function () { });
+    </script>
+
+    <script src="./Report(该文件夹请勿删除影响报告阅读)/bindinghandlers.js"></script>
+    <script src="./Report(该文件夹请勿删除影响报告阅读)/report.js"></script>
+
+    <script src="./Report(该文件夹请勿删除影响报告阅读)/Detail.js"></script>
+    <script>
+        var data={"detailMatchTime":0,"hitDetailInfoList":[{"beginPosition":4089,"copyPercent":0.0009925887,"hitBeginPosition":2058,"hitLength":21,"hitText":"这就为电子商务在中国的发展提供了群众基础。","length":21,"originalChars":[4089,4092,4093,4094,4095,4096,4097,4098,4099,4100,4104,4105,4106,4107,4108],"recordIndex":10,"similarChars":[2058,2061,2062,2063,2064,2065,2066,2067,2068,2069,2070,2074,2075,2076,2077]},{"beginPosition":4815,"copyPercent":0.001257279,"hitBeginPosition":26194,"hitLength":23,"hitText":"主要包含了系统功能需求分析、系统性能需求分析、","length":25,"originalChars":[4815,4816,4817,4820,4821,4823,4824,4825,4826,4827,4828,4830,4831,4833,4834,4835,4836,4837,4838],"recordIndex":1,"similarChars":[26196,26197,26198,26199,26200,26201,26202,26203,26204,26205,26206,26208,26209,26210,26211,26212,26213,26214,26215]},{"beginPosition":4840,"copyPercent":0.00119110639,"hitBeginPosition":20898,"hitLength":20,"hitText":"系统经济可行性分析和系统操作可行性分析。","length":22,"originalChars":[4840,4841,4843,4844,4845,4846,4847,4848,4849,4851,4852,4854,4855,4856,4857,4858,4859,4860],"recordIndex":14,"similarChars":[20898,20899,20900,20901,20902,20903,20904,20905,20906,20908,20909,20910,20911,20912,20913,20914,20915,20916]},{"beginPosition":5172,"copyPercent":0.00119110639,"hitBeginPosition":34544,"hitLength":24,"hitText":"在系统测试环节，我们主要针对系统的功能进行测试。","length":24,"originalChars":[5172,5173,5174,5175,5176,5177,5178,5179,5185,5186,5187,5188,5189,5191,5192,5193,5194,5195],"recordIndex":7,"similarChars":[34545,34546,34547,34548,34549,34550,34551,34554,34555,34558,34559,34560,34561,34562,34563,34564,34565,34566]},{"beginPosition":6838,"copyPercent":0.00112493383,"hitBeginPosition":11758,"hitLength":23,"hitText":"MVC减弱了业务逻辑接口和数据接口之间的耦合，","length":21,"originalChars":[6838,6839,6840,6841,6842,6843,6844,6845,6846,6848,6849,6850,6851,6854,6855,6856,6858],"recordIndex":11,"similarChars":[11761,11762,11763,11764,11765,11766,11767,11768,11769,11771,11772,11773,11774,11777,11778,11779,11780]},{"beginPosition":6870,"copyPercent":0.0009264161,"hitBeginPosition":20027,"hitLength":17,"hitText":"模型是用来表示业务数据和业务规则，","length":21,"originalChars":[6870,6871,6879,6880,6881,6882,6883,6884,6885,6886,6887,6888,6889,6890],"recordIndex":4,"similarChars":[20027,20028,20032,20033,20034,20035,20036,20037,20038,20039,20040,20041,20042,20043]},{"beginPosition":6946,"copyPercent":0.00066172576,"hitBeginPosition":20062,"hitLength":20,"hitText":"而且一个模型可以同时为多个视图提供数据，","length":20,"originalChars":[6952,6953,6954,6955,6956,6957,6959,6960,6961,6962],"recordIndex":4,"similarChars":[20064,20065,20066,20067,20068,20069,20073,20074,20075,20076]},{"beginPosition":7029,"copyPercent":0.00145579677,"hitBeginPosition":1418,"hitLength":32,"hitText":"在新式的Web应用程序中，HTML依旧在视图中扮演着重要的角色，","length":32,"originalChars":[7029,7032,7033,7034,7035,7036,7037,7038,7039,7040,7041,7042,7043,7044,7047,7048,7049,7050,7051,7052,7057,7060],"recordIndex":8,"similarChars":[1418,1422,1423,1424,1425,1426,1427,1428,1429,1430,1431,1432,1433,1434,1435,1436,1437,1438,1439,1440,1446,1449]},{"beginPosition":7107,"copyPercent":0.00224986766,"hitBeginPosition":1566,"hitLength":66,"hitText":"在视图中其实没有真正的处理发生，不管这些数据是联机存储的还是一个雇员列表，作为视图来讲，它只是作为一种输出数据并允许用户操纵的方式。","length":49,"originalChars":[7107,7108,7109,7110,7112,7113,7114,7115,7116,7117,7118,7119,7120,7121,7134,7135,7136,7137,7138,7139,7140,7141,7142,7143,7144,7145,7146,7147,7148,7149,7152,7153,7154,7155],"recordIndex":8,"similarChars":[1566,1567,1568,1569,1572,1573,1574,1575,1576,1577,1578,1579,1580,1581,1610,1611,1612,1613,1614,1615,1616,1617,1618,1619,1620,1621,1622,1623,1624,1625,1628,1629,1630,1631]},{"beginPosition":7156,"copyPercent":0.005955532,"hitBeginPosition":2435,"hitLength":118,"hitText":"控制层接受用户的输入并调用模型和视图去完成用户的需求。所以当单击Web页面中的超链接和发送HTML表单时，控制器本身不输出任何东西和做任何处理。它只是接收请求并决定调用哪个模型构件去处理请求，然后确定用哪个视图来显示模型处理返回的数据。","length":132,"originalChars":[7156,7157,7158,7159,7175,7176,7177,7178,7179,7180,7181,7182,7185,7188,7189,7190,7191,7192,7193,7202,7203,7204,7205,7206,7208,7209,7210,7211,7212,7213,7214,7215,7216,7217,7218,7219,7220,7221,7222,7223,7224,7225,7226,7227,7228,7229,7230,7231,7232,7233,7237,7238,7239,7240,7241,7242,7243,7244,7245,7246,7247,7248,7249,7253,7254,7255,7256,7259,7260,7263,7264,7265,7266,7267,7268,7269,7270,7275,7276,7277,7278,7279,7280,7281,7282,7283,7284,7285,7286,7287],"recordIndex":8,"similarChars":[2440,2441,2442,2443,2444,2445,2446,2447,2448,2449,2450,2451,2452,2453,2454,2455,2456,2457,2458,2467,2468,2469,2470,2471,2474,2475,2476,2477,2478,2479,2480,2481,2482,2483,2484,2485,2486,2487,2488,2489,2490,2491,2492,2493,2494,2495,2496,2497,2498,2499,2501,2502,2503,2504,2505,2506,2507,2508,2509,2510,2511,2512,2513,2515,2516,2517,2518,2521,2522,2525,2526,2527,2528,2529,2530,2531,2532,2536,2537,2538,2539,2540,2541,2542,2547,2548,2549,2550,2551,2552]},{"beginPosition":7747,"copyPercent":0.00105876126,"hitBeginPosition":13876,"hitLength":19,"hitText":"系统前台是指提供给系部用户使用的板块，","length":21,"originalChars":[7750,7751,7754,7755,7756,7757,7758,7759,7760,7761,7762,7763,7764,7765,7766,7767],"recordIndex":3,"similarChars":[13876,13877,13878,13879,13880,13882,13883,13884,13887,13888,13889,13890,13891,13892,13893,13894]},{"beginPosition":8233,"copyPercent":0.00231604022,"hitBeginPosition":18615,"hitLength":26,"hitText":"在实现系统的基本功能的同时，尽量让系统操作简单易懂，","length":74,"originalChars":[8242,8243,8244,8245,8246,8247,8248,8249,8254,8255,8276,8283,8284,8285,8286,8287,8288,8289,8290,8291,8292,8293,8294,8295,8296,8297,8298,8299,8300,8301,8302,8303,8304,8305,8306],"recordIndex":2,"similarChars":[18618,18619,18620,18632,18633,18634,18635,18636,18637,18638,18639,18615,18616,18617,18618,18619,18620,18623,18624,18625,18626,18627,18628,18629,18630,18631,18632,18633,18634,18635,18636,18637,18638,18639,18640]},{"beginPosition":8657,"copyPercent":0.000794070947,"hitBeginPosition":7110,"hitLength":18,"hitText":"采用相对较成熟的开发语言及开发框架，","length":16,"originalChars":[8660,8661,8662,8663,8664,8665,8666,8668,8669,8670,8671,8672],"recordIndex":12,"similarChars":[7115,7116,7117,7118,7119,7120,7121,7123,7124,7125,7126,7127]},{"beginPosition":8768,"copyPercent":0.0005955532,"hitBeginPosition":19076,"hitLength":22,"hitText":"选择成熟稳定的开发语言和开发框架是非常重要，","length":23,"originalChars":[8772,8773,8774,8775,8776,8777,8778,8779,8790],"recordIndex":5,"similarChars":[19082,19083,19084,19085,19086,19087,19088,19089,19097]},{"beginPosition":8986,"copyPercent":0.00291159353,"hitBeginPosition":14523,"hitLength":56,"hitText":"在使用成本上，用户只需要拥有一台能够联网的计算机，通过注册后就可以在世界的任何一个角落使用系统的全部功能和服务。","length":56,"originalChars":[8986,8987,8988,8989,8990,8991,8992,8993,8994,8995,8996,9005,9006,9007,9008,9010,9011,9012,9013,9014,9015,9016,9017,9018,9019,9020,9021,9022,9023,9024,9025,9026,9027,9028,9029,9031,9032,9033,9036,9037,9038,9039,9040,9041],"recordIndex":13,"similarChars":[14523,14524,14525,14526,14527,14529,14530,14531,14532,14533,14534,14543,14544,14545,14546,14547,14548,14549,14550,14551,14553,14554,14555,14556,14557,14558,14559,14560,14561,14562,14563,14564,14565,14566,14567,14568,14569,14570,14573,14574,14575,14576,14577,14578]},{"beginPosition":10489,"copyPercent":0.001257279,"hitBeginPosition":27589,"hitLength":26,"hitText":"景点信息表（Scenery）用于存储景点的相关信息，","length":23,"originalChars":[10489,10491,10492,10493,10494,10495,10496,10497,10498,10499,10500,10501,10502,10503,10504,10505,10506,10509,10510],"recordIndex":6,"similarChars":[27589,27590,27591,27592,27593,27594,27602,27603,27604,27605,27606,27607,27608,27609,27610,27611,27612,27613,27614]},{"beginPosition":11367,"copyPercent":0.000794070947,"hitBeginPosition":23258,"hitLength":16,"hitText":"前台功能模块主要提供给用户使用，","length":17,"originalChars":[11371,11372,11374,11375,11376,11377,11378,11379,11380,11381,11382,11383],"recordIndex":9,"similarChars":[23258,23259,23264,23265,23266,23267,23268,23269,23270,23271,23272,23273]}],"publishCitedCopyPercent":0.0,"quickSearchTime":0,"recordHitInfoList":[{"copyPercent":0.001257279,"recordIndex":1},{"copyPercent":0.00231604022,"recordIndex":2},{"copyPercent":0.00105876126,"recordIndex":3},{"copyPercent":0.00158814189,"recordIndex":4},{"copyPercent":0.0005955532,"recordIndex":5},{"copyPercent":0.001257279,"recordIndex":6},{"copyPercent":0.00119110639,"recordIndex":7},{"copyPercent":0.009661197,"recordIndex":8},{"copyPercent":0.000794070947,"recordIndex":9},{"copyPercent":0.0009925887,"recordIndex":10},{"copyPercent":0.00112493383,"recordIndex":11},{"copyPercent":0.000794070947,"recordIndex":12},{"copyPercent":0.00291159353,"recordIndex":13},{"copyPercent":0.00119110639,"recordIndex":14}],"recordList":[{"articleId":"","conference":"","creator":["陈霜雪"],"DBID":"468459ca-03cf-4342-8cc7-94f0e26702c1","dataBaseInfoMap":[],"date":"2019-01-01T00:00:00","dateSpecified":true,"degree":"","detectDate":"9999-01-01T00:00:00","detectDateSpecified":true,"detectDateType":"","fullLength":17250,"fulltextLength":15112,"htmlPath":"","isDisplayFulltext":true,"isPublishedSelfCited":false,"isReference":false,"isSelfCited":true,"isUnPublishedSelfCited":false,"issue":"","paragraphNum":199,"schoolFirst":"","source":"","title":["无"],"volumn":"","uDocumentID":null},{"articleId":"2505875","conference":"","creator":["陶宇"],"DBID":"学位","dataBaseInfoMap":[{"key":"有无版权","value":"1"},{"key":"授予学位单位","value":"大连理工大学"},{"key":"出版时间","value":"2013-12-01 00:00:00.0"},{"key":"作者","value":"陶宇"},{"key":"CheckinID","value":"2505875"},{"key":"导师","value":"李丽双"},{"key":"授予学位","value":"硕士"},{"key":"资源类型","value":"学位"},{"key":"正题名","value":"基于SOA架构的数字化供电系统的研究与设计"},{"key":"馆藏号","value":"Y2501433"},{"key":"专业","value":"计算机技术"},{"key":"DOI","value":null}],"date":"2013-12-01T00:00:00","dateSpecified":true,"degree":"","detectDate":"9999-01-01T00:00:00","detectDateSpecified":true,"detectDateType":"","fullLength":0,"fulltextLength":42925,"htmlPath":"","isDisplayFulltext":true,"isPublishedSelfCited":false,"isReference":false,"isSelfCited":false,"isUnPublishedSelfCited":false,"issue":"","paragraphNum":0,"schoolFirst":"","source":"大连理工大学","title":["基于SOA架构的数字化供电系统的研究与设计"],"volumn":"","uDocumentID":null},{"articleId":"2984877","conference":"","creator":["房振伟"],"DBID":"学位","dataBaseInfoMap":[{"key":"有无版权","value":"1"},{"key":"授予学位单位","value":"东南大学"},{"key":"出版时间","value":"2016-06-04 00:00:00.0"},{"key":"作者","value":"房振伟"},{"key":"CheckinID","value":"2984877"},{"key":"导师","value":"吴金;晏祥彪"},{"key":"授予学位","value":"硕士"},{"key":"资源类型","value":"学位"},{"key":"正题名","value":"基于Web的在线考试系统的设计与实现"},{"key":"馆藏号","value":"Y3142687"},{"key":"专业","value":"软件工程"},{"key":"DOI","value":null}],"date":"2016-06-04T00:00:00","dateSpecified":true,"degree":"","detectDate":"9999-01-01T00:00:00","detectDateSpecified":true,"detectDateType":"","fullLength":0,"fulltextLength":35982,"htmlPath":"","isDisplayFulltext":true,"isPublishedSelfCited":false,"isReference":false,"isSelfCited":false,"isUnPublishedSelfCited":false,"issue":"","paragraphNum":0,"schoolFirst":"","source":"东南大学","title":["基于Web的在线考试系统的设计与实现"],"volumn":"","uDocumentID":null},{"articleId":"2827894","conference":"","creator":["顾善玉"],"DBID":"学位","dataBaseInfoMap":[{"key":"有无版权","value":"0"},{"key":"授予学位单位","value":"重庆大学"},{"key":"出版时间","value":"2015-05-23 00:00:00.0"},{"key":"作者","value":"顾善玉"},{"key":"CheckinID","value":"2827894"},{"key":"导师","value":"张敏;梁岚"},{"key":"授予学位","value":"硕士"},{"key":"资源类型","value":"学位"},{"key":"正题名","value":"广西交通职业技术学院网上教材征订系统的设计与实现"},{"key":"馆藏号","value":"Y2936186"},{"key":"专业","value":"软件工程"},{"key":"DOI","value":null}],"date":"2015-05-23T00:00:00","dateSpecified":true,"degree":"","detectDate":"9999-01-01T00:00:00","detectDateSpecified":true,"detectDateType":"","fullLength":0,"fulltextLength":31688,"htmlPath":"","isDisplayFulltext":true,"isPublishedSelfCited":false,"isReference":false,"isSelfCited":false,"isUnPublishedSelfCited":false,"issue":"","paragraphNum":0,"schoolFirst":"","source":"重庆大学","title":["广西交通职业技术学院网上教材征订系统的设计与实现"],"volumn":"","uDocumentID":null},{"articleId":"829524","conference":"","creator":["王玲"],"DBID":"学位","dataBaseInfoMap":[{"key":"有无版权","value":"1"},{"key":"授予学位单位","value":"电子科技大学"},{"key":"出版时间","value":"2013-12-24 00:00:00.0"},{"key":"作者","value":"王玲"},{"key":"CheckinID","value":"829524"},{"key":"导师","value":"王玉林;汤绍怀"},{"key":"授予学位","value":"硕士"},{"key":"资源类型","value":"学位"},{"key":"正题名","value":"面向成品油管道的设备管理信息系统设计与实现"},{"key":"馆藏号","value":"D773310"},{"key":"专业","value":"软件工程"},{"key":"DOI","value":null}],"date":"2013-12-24T00:00:00","dateSpecified":true,"degree":"","detectDate":"9999-01-01T00:00:00","detectDateSpecified":true,"detectDateType":"","fullLength":0,"fulltextLength":40080,"htmlPath":"","isDisplayFulltext":true,"isPublishedSelfCited":false,"isReference":false,"isSelfCited":false,"isUnPublishedSelfCited":false,"issue":"","paragraphNum":0,"schoolFirst":"","source":"电子科技大学","title":["面向成品油管道的设备管理信息系统设计与实现"],"volumn":"","uDocumentID":null},{"articleId":"4251177","conference":"","creator":["张泉森"],"DBID":"学位","dataBaseInfoMap":[{"key":"有无版权","value":"1"},{"key":"授予学位单位","value":"湖南大学"},{"key":"出版时间","value":"2018-05-21 00:00:00.0"},{"key":"作者","value":"张泉森"},{"key":"CheckinID","value":"4251177"},{"key":"导师","value":"彭祝斌;舒斌"},{"key":"授予学位","value":"硕士"},{"key":"资源类型","value":"学位"},{"key":"正题名","value":"基于Spring框架的高校教学评估系统的设计与实现"},{"key":"馆藏号","value":"D01498713"},{"key":"专业","value":"软件工程"},{"key":"DOI","value":null}],"date":"2018-05-21T00:00:00","dateSpecified":true,"degree":"","detectDate":"9999-01-01T00:00:00","detectDateSpecified":true,"detectDateType":"","fullLength":0,"fulltextLength":37860,"htmlPath":"","isDisplayFulltext":true,"isPublishedSelfCited":false,"isReference":false,"isSelfCited":false,"isUnPublishedSelfCited":false,"issue":"","paragraphNum":0,"schoolFirst":"","source":"湖南大学","title":["基于Spring框架的高校教学评估系统的设计与实现"],"volumn":"","uDocumentID":null},{"articleId":"4120668","conference":"","creator":["陈佳敏"],"DBID":"学位","dataBaseInfoMap":[{"key":"有无版权","value":"1"},{"key":"授予学位单位","value":"南京邮电大学"},{"key":"出版时间","value":"2017-04-01 00:00:00.0"},{"key":"作者","value":"陈佳敏"},{"key":"CheckinID","value":"4120668"},{"key":"导师","value":"张登银"},{"key":"授予学位","value":"硕士"},{"key":"资源类型","value":"学位"},{"key":"正题名","value":"智慧旅游系统的设计和实现"},{"key":"馆藏号","value":"D01326596"},{"key":"专业","value":"电子与通信工程"},{"key":"DOI","value":null}],"date":"2017-04-01T00:00:00","dateSpecified":true,"degree":"","detectDate":"9999-01-01T00:00:00","detectDateSpecified":true,"detectDateType":"","fullLength":0,"fulltextLength":38981,"htmlPath":"","isDisplayFulltext":true,"isPublishedSelfCited":false,"isReference":false,"isSelfCited":false,"isUnPublishedSelfCited":false,"issue":"","paragraphNum":0,"schoolFirst":"","source":"南京邮电大学","title":["智慧旅游系统的设计和实现"],"volumn":"","uDocumentID":null},{"articleId":"824264","conference":"","creator":["谢翠红"],"DBID":"学位","dataBaseInfoMap":[{"key":"有无版权","value":"1"},{"key":"授予学位单位","value":"电子科技大学"},{"key":"出版时间","value":"2012-05-01 00:00:00.0"},{"key":"作者","value":"谢翠红"},{"key":"CheckinID","value":"824264"},{"key":"导师","value":"徐洁;吴莉莉"},{"key":"授予学位","value":"硕士"},{"key":"资源类型","value":"学位"},{"key":"正题名","value":"基于B/S架构的网络在线考试系统的设计与实现"},{"key":"馆藏号","value":"D768050"},{"key":"专业","value":"软件工程"},{"key":"DOI","value":null}],"date":"2012-05-01T00:00:00","dateSpecified":true,"degree":"","detectDate":"9999-01-01T00:00:00","detectDateSpecified":true,"detectDateType":"","fullLength":0,"fulltextLength":45871,"htmlPath":"","isDisplayFulltext":true,"isPublishedSelfCited":false,"isReference":false,"isSelfCited":false,"isUnPublishedSelfCited":false,"issue":"","paragraphNum":0,"schoolFirst":"","source":"电子科技大学","title":["基于B/S架构的网络在线考试系统的设计与实现"],"volumn":"","uDocumentID":null},{"articleId":"13205279","conference":"","creator":[""],"DBID":"报纸","dataBaseInfoMap":[{"key":"bz_mc","value":"企业家日报"},{"key":"id_new","value":"13205279"},{"key":"banci","value":"11"},{"key":"xuhao","value":"2"},{"key":"batch","value":"3"},{"key":"banming","value":"金叶观察"},{"key":"futi","value":""},{"key":"zuozhe","value":""},{"key":"zishu","value":"4234"},{"key":"riqi","value":"2014-05-07 00:00:00.0"},{"key":"biaoti","value":"浅谈基于MVC框架的烟草企业门户网站建设"},{"key":"id","value":"3595003"},{"key":"baoming","value":"企业家日报"}],"date":"2014-05-07T00:00:00","dateSpecified":true,"degree":"","detectDate":"9999-01-01T00:00:00","detectDateSpecified":true,"detectDateType":"","fullLength":0,"fulltextLength":0,"htmlPath":"","isDisplayFulltext":true,"isPublishedSelfCited":false,"isReference":false,"isSelfCited":false,"isUnPublishedSelfCited":false,"issue":"","paragraphNum":0,"schoolFirst":"","source":"","title":["浅谈基于MVC框架的烟草企业门户网站建设"],"volumn":"","uDocumentID":null},{"articleId":"3002232","conference":"","creator":["陈宜佳"],"DBID":"学位","dataBaseInfoMap":[{"key":"有无版权","value":"1"},{"key":"授予学位单位","value":"厦门大学"},{"key":"出版时间","value":"2016-12-01 00:00:00.0"},{"key":"作者","value":"陈宜佳"},{"key":"CheckinID","value":"3002232"},{"key":"导师","value":"王备战"},{"key":"授予学位","value":"硕士"},{"key":"资源类型","value":"学位"},{"key":"正题名","value":"混凝土预制构件的电子商务系统的设计与实现"},{"key":"馆藏号","value":"Y3162953"},{"key":"专业","value":"软件工程"},{"key":"DOI","value":null}],"date":"2016-12-01T00:00:00","dateSpecified":true,"degree":"","detectDate":"9999-01-01T00:00:00","detectDateSpecified":true,"detectDateType":"","fullLength":0,"fulltextLength":0,"htmlPath":"","isDisplayFulltext":true,"isPublishedSelfCited":false,"isReference":false,"isSelfCited":false,"isUnPublishedSelfCited":false,"issue":"","paragraphNum":0,"schoolFirst":"","source":"厦门大学","title":["混凝土预制构件的电子商务系统的设计与实现"],"volumn":"","uDocumentID":null},{"articleId":"55397307","conference":"","creator":["龚雪莉"],"DBID":"期刊","dataBaseInfoMap":[{"key":"CreatorSecond","value":null},{"key":"zz_xm","value":"龚雪莉"},{"key":"CreatorFirst","value":"龚雪莉"},{"key":"F_Volumn","value":null},{"key":"f_doi","value":""},{"key":"有无版权","value":"1"},{"key":"qk_name","value":"现代经济信息"},{"key":"CheckinID","value":"55397307"},{"key":"f_issue","value":"16"},{"key":"出版日期","value":"2014-08-25 00:00:00.0"},{"key":"f_year","value":"2014"},{"key":"收稿日期类型","value":null},{"key":"资源类型","value":"期刊"},{"key":"f_qcode","value":"xdjjxx201416155"},{"key":"zze_xm","value":null},{"key":"qk_engname","value":"Modern Economic Information"},{"key":"收稿日期","value":"2014-08-25 00:00:00.0"},{"key":"F_Title","value":"网络经济时代企业财务管理创新研究"},{"key":"F_EngTitle","value":""}],"date":"2014-08-25T00:00:00","dateSpecified":true,"degree":"","detectDate":"9999-01-01T00:00:00","detectDateSpecified":true,"detectDateType":"收稿日期","fullLength":0,"fulltextLength":2728,"htmlPath":"","isDisplayFulltext":true,"isPublishedSelfCited":false,"isReference":false,"isSelfCited":false,"isUnPublishedSelfCited":false,"issue":"","paragraphNum":0,"schoolFirst":"","source":"现代经济信息","title":["网络经济时代企业财务管理创新研究"],"volumn":"","uDocumentID":null},{"articleId":"923804","conference":"","creator":["王玺"],"DBID":"学位","dataBaseInfoMap":[{"key":"有无版权","value":"0"},{"key":"授予学位单位","value":"黑龙江大学"},{"key":"出版时间","value":"2010-04-01 00:00:00.0"},{"key":"作者","value":"王玺"},{"key":"CheckinID","value":"923804"},{"key":"导师","value":"付国宏"},{"key":"授予学位","value":"硕士"},{"key":"资源类型","value":"学位"},{"key":"正题名","value":"基于SSH框架的大客户关系管理系统"},{"key":"馆藏号","value":"J0018680"},{"key":"专业","value":"软件工程"},{"key":"DOI","value":null}],"date":"2010-04-01T00:00:00","dateSpecified":true,"degree":"","detectDate":"9999-01-01T00:00:00","detectDateSpecified":true,"detectDateType":"","fullLength":0,"fulltextLength":42480,"htmlPath":"","isDisplayFulltext":true,"isPublishedSelfCited":false,"isReference":false,"isSelfCited":false,"isUnPublishedSelfCited":false,"issue":"","paragraphNum":0,"schoolFirst":"","source":"黑龙江大学","title":["基于SSH框架的大客户关系管理系统"],"volumn":"","uDocumentID":null},{"articleId":"356561","conference":"","creator":["陈昌茂"],"DBID":"学位","dataBaseInfoMap":[{"key":"有无版权","value":"1"},{"key":"授予学位单位","value":"上海交通大学"},{"key":"出版时间","value":"2012-05-22 00:00:00.0"},{"key":"作者","value":"陈昌茂"},{"key":"CheckinID","value":"356561"},{"key":"导师","value":"赵建军;夏钧"},{"key":"授予学位","value":"硕士"},{"key":"资源类型","value":"学位"},{"key":"正题名","value":"住房公积金单位会员系统的设计与实现"},{"key":"馆藏号","value":"D296779"},{"key":"专业","value":"软件工程"},{"key":"DOI","value":null}],"date":"2012-05-22T00:00:00","dateSpecified":true,"degree":"","detectDate":"9999-01-01T00:00:00","detectDateSpecified":true,"detectDateType":"","fullLength":0,"fulltextLength":34070,"htmlPath":"","isDisplayFulltext":true,"isPublishedSelfCited":false,"isReference":false,"isSelfCited":false,"isUnPublishedSelfCited":false,"issue":"","paragraphNum":0,"schoolFirst":"","source":"上海交通大学","title":["住房公积金单位会员系统的设计与实现"],"volumn":"","uDocumentID":null},{"articleId":"2397386","conference":"","creator":["庞振华"],"DBID":"学位","dataBaseInfoMap":[{"key":"有无版权","value":"1"},{"key":"授予学位单位","value":"厦门大学"},{"key":"出版时间","value":"2013-05-01 00:00:00.0"},{"key":"作者","value":"庞振华"},{"key":"CheckinID","value":"2397386"},{"key":"导师","value":"吴清锋"},{"key":"授予学位","value":"硕士"},{"key":"资源类型","value":"学位"},{"key":"正题名","value":"基于个性化推荐技术的书籍营销系统设计与实现"},{"key":"馆藏号","value":"Y2343668"},{"key":"专业","value":"软件工程"},{"key":"DOI","value":null}],"date":"2013-05-01T00:00:00","dateSpecified":true,"degree":"","detectDate":"9999-01-01T00:00:00","detectDateSpecified":true,"detectDateType":"","fullLength":0,"fulltextLength":37091,"htmlPath":"","isDisplayFulltext":true,"isPublishedSelfCited":false,"isReference":false,"isSelfCited":false,"isUnPublishedSelfCited":false,"issue":"","paragraphNum":0,"schoolFirst":"","source":"厦门大学","title":["基于个性化推荐技术的书籍营销系统设计与实现"],"volumn":"","uDocumentID":null},{"articleId":"2837155","conference":"","creator":["黄浩麟"],"DBID":"学位","dataBaseInfoMap":[{"key":"有无版权","value":"1"},{"key":"授予学位单位","value":"厦门大学"},{"key":"出版时间","value":"2015-07-01 00:00:00.0"},{"key":"作者","value":"黄浩麟"},{"key":"CheckinID","value":"2837155"},{"key":"导师","value":"施芝元"},{"key":"授予学位","value":"硕士"},{"key":"资源类型","value":"学位"},{"key":"正题名","value":"电网低压用户信息采集系统研究及建设"},{"key":"馆藏号","value":"Y2952040"},{"key":"专业","value":"电子与通信工程"},{"key":"DOI","value":null}],"date":"2015-07-01T00:00:00","dateSpecified":true,"degree":"","detectDate":"9999-01-01T00:00:00","detectDateSpecified":true,"detectDateType":"","fullLength":0,"fulltextLength":37471,"htmlPath":"","isDisplayFulltext":true,"isPublishedSelfCited":false,"isReference":false,"isSelfCited":false,"isUnPublishedSelfCited":false,"issue":"","paragraphNum":0,"schoolFirst":"","source":"厦门大学","title":["电网低压用户信息采集系统研究及建设"],"volumn":"","uDocumentID":null}],"referenceCitedCopyPercent":0.0,"selfCitedCopyPercent":0.0,"totalCopyPercent":0.02673372,"unPublishCitedCopyPercent":0.0};
+        var isPublished = false;
+        var totalCopyPercent = (data.totalCopyPercent * 100).toFixed(2);
+        var referenceCopyPercent = (data.referenceCitedCopyPercent * 100).toFixed(2);
+        var degreeCopyPercent = (data.unPublishCitedCopyPercent * 100).toFixed(2);
+        var publishedCopyPercent = (data.publishCitedCopyPercent * 100).toFixed(2);
+        var unReferenceCopyPercent = ((data.totalCopyPercent - data.referenceCitedCopyPercent) * 100).toFixed(2);
+        var unDegreeCopyPercent = ((data.totalCopyPercent - data.unPublishCitedCopyPercent) * 100).toFixed(2);
+        var unPublishedCopyPercent = ((data.totalCopyPercent - data.publishCitedCopyPercent) * 100).toFixed(2);
+
+        viewModel.copyPercentGraph(totalCopyPercent);
+        viewModel.copyPercents({
+            totalCopyPercent: totalCopyPercent,
+            referenceCopyPercent: referenceCopyPercent,
+            degreeCopyPercent: degreeCopyPercent,
+            publishedCopyPercent: publishedCopyPercent,
+            unReferenceCopyPercent: unReferenceCopyPercent,
+            unDegreeCopyPercent: unDegreeCopyPercent,
+            unPublishedCopyPercent: unPublishedCopyPercent
+        });
+
+        viewModel.originalCharacterTotal(data.recordList[0].fulltextLength);
+        viewModel.originalParagraphTotal(data.recordList[0].paragraphNum);
+
+        //
+        for (var i = 0; i < data.recordHitInfoList.length; i++) {
+            var recordHitInfo = data.recordHitInfoList[i];
+
+            var recordIndex = recordHitInfo["recordIndex"];
+            var copyPercent = recordHitInfo["copyPercent"];
+
+            data.recordList[recordIndex].copyPercent = copyPercent;
+        }
+
+
+        // 全文长度
+        var textLength = data.recordList[0].fullLength;
+
+
+        // 相似文献列表
+        var similarArticles = _.drop(data.recordList, 1);
+
+        if (totalCopyPercent != 0) {
+            // 最大
+            var maxCopyPercentArticle = _.max(similarArticles, 'copyPercent');
+            viewModel.MaxCopyPercentArticle({
+                copyPercent: (maxCopyPercentArticle.copyPercent * 100).toFixed('2'),
+                title: maxCopyPercentArticle.title[0],
+                href: '#'
+            });
+        }
+        else {
+
+            $("#part2").hide();
+            $("#part2zero").show();
+        }
+        // 相似片段
+        var similarFragments = data.hitDetailInfoList;
+
+        //similarFragments = _.filter(similarFragments, function(item){ return item.copyPercent >= 0.001;  }); // 0.1%
+
+        _.forEach(similarFragments, function (hitDetailInfo, i) {
+            var record = data.recordList[hitDetailInfo.recordIndex];
+            if (record.DBID.indexOf('专利') != -1) {
+                record.source = "中文专利全文数据库";
+                var pname, number;
+                _.find(record.dataBaseInfoMap, function (i) {
+                    if (i.key == "pname")
+                        pname = i.value;
+                    if (i.key == "number")
+                        number = i.value;
+                })
+                record.title[0] = pname + number;
+            }
+            if (record.DBID.indexOf('报纸') != -1) {
+                if (record.dataBaseInfoMap != null && record.dataBaseInfoMap.length != 0) {
+                    record.source = _.find(record.dataBaseInfoMap, function (record) { return record.key == 'baoming' }).value;
+                    record.title[0] = _.find(record.dataBaseInfoMap, function (record) { return record.key == 'biaoti' }).value;
+                    if (record.creator[0] == "无" || record.creator[0] == "") {
+                        record.creator[0] = "-";
+                    }
+                    else {
+                        record.creator[0] = _.find(record.dataBaseInfoMap, function (record) { return record.key == 'zuozhe' }).value;
+                    }
+                }
+                else {
+                    record.source = "-";
+                    record.title[0] = "-";
+                    record.creator[0] = "-";
+                    record.date = "-";
+                }
+            }
+            hitDetailInfo.title = record.title[0];
+            hitDetailInfo.creator = record.creator[0];
+            hitDetailInfo.DBID = record.DBID + '论文';
+            if (hitDetailInfo.DBID == "网文论文") {
+                var wwurl, qkname;
+                _.find(record.dataBaseInfoMap, function (i) {
+                    if (i.key == "qk_name")
+                        wwurl = i.value;
+                    if (i.key == "来源")
+                        qkname = i.value;
+                })
+                hitDetailInfo.source = wwurl + '：' + qkname;
+            }
+            else if (record.DBID.indexOf('报纸') != -1) {
+                if (record.dataBaseInfoMap != null && record.dataBaseInfoMap.length != 0) {
+                    hitDetailInfo.source = _.find(record.dataBaseInfoMap, function (record) { return record.key == 'baoming' }).value;
+                }
+                else {
+                    hitDetailInfo.source = "-";
+                }
+            }
+            else {
+                hitDetailInfo.source = record.source ? record.source : '-';
+            }
+            hitDetailInfo.date = moment(record.date).format('YYYY-MM-DD');
+            if (record.DBID.indexOf('报纸') != -1) {
+                if (record.dataBaseInfoMap != null && record.dataBaseInfoMap.length != 0) {
+                    hitDetailInfo.date = moment(_.find(record.dataBaseInfoMap, function (record) { return record.key == 'riqi' }).value).format('YYYY-MM-DD');
+                }
+                else {
+                    hitDetailInfo.date = "-";
+                }
+            }
+            hitDetailInfo.isReference = record.isReference ? '是' : '否';
+
+            hitDetailInfo.left = hitDetailInfo.beginPosition / textLength * 400 + 1 + 'px';
+            hitDetailInfo.width = hitDetailInfo.length / textLength * 400 + 'px';
+
+            hitDetailInfo.index = i;
+        });
+
+
+        //
+        var prefix = '<span>';
+        var suffix = '</span>';
+
+        // 全文，注意：similarFragments被反转
+        var htmlContent="摘要\r\n伴随着改革开放四十周年时间的到来，我国的在经过了四十年的时间迎来了国家实力和经济水平的巨大飞跃，人们生活水平也在预期之内完成了全民达到小康水平的目标，人们的生活水平也随着国家强盛和经济发展得到了很大程度上的提高。故此许多人已经开始改善自己的生活体验，提高生活水平。旅游已经成为了目前国内人民的首要选择。\r\n此次为了能够适应当前社会发展以及人们的生活需求，将会通过采用B-S架构的模式来作为后端开发架构，采用sublime编辑器作为开发工具，使用Node.js来作为后端开发，使用MYSQL作为数据库存储工具。在对于前端开发APP的方面，将会采用weex作为前台开发的框架，然后完成一个跨平台的移动APP系统。\r\n通过对于这些技术的使用完成了具有前后台功能的乐山只会旅游APP系统，这个系统主要包含了前台以及后台。其中前台是提供给用户使用，功能主要是分为了四个大的模块，包含了对于乐山景区的介绍模块，旅游信息的查询模块，旅游路线的推荐模块，个人信息模块。后台主要是通过对于前台所有信息的一个管理，提供给管理员使用，包含了对于景区介绍管理、酒店住宿管理、餐饮店管理、娱乐模块管理、账户管理、系统发布管理、游客游记管理、路线推荐管理。通过这些同能实现一个能够帮助游客在乐山游玩时提供帮助的APP旅游系统。\r\n关键词：旅游APP；Node.js；Weex；MySql\r\nABSTRACT\r\nFollowing the arrival of the 40th anniversary of reform and opening-up time, our country's after forty years in the national strength and the economic level of giant leap, people's living standard is also expected to complete the national target, have reached a well-off standard of the people's standard of living is also as the country strong and economic development has been largely improved. As a result, many people have started to improve their life experience and improve their living standards. Tourism has become the primary choice of domestic people.\r\nIn order to adapt to the current social development and people's life needs, we will adopt b-s architecture as the back-end development architecture, use sublime editor as the development tool, use node. js as the back-end development, and use MYSQL as the database storage tool. For front-end APP development, weex will be adopted as the framework for front-end development, and then a cross-platform mobile APP system will be completed.\r\nThrough the use of these technologies, leshan only travel APP system with front-end and back-end functions is completed. This system mainly includes the front end and backstage. The function of the front desk is mainly divided into four major modules, including the introduction module of leshan scenic spot, the inquiry module of tourism information, the recommendation module of tourism routes, and the personal information module. Background is mainly through the front of all information management, to provide the use of the administrator, including the introduction of the scenic area management, hotel accommodation manager management, food and beverage management, entertainment module management, account management, system release management, travel notes management, route recommendation management. Through these, we can realize an APP travel system that can help tourists when they visit leshan.\r\nKey words: Tourism APP;Node.js;Weex;MySql\r\n目录\r\n1  绪论 7\r\n1.1  研究的背景 7\r\n1.2  国内外研究现状分析 7\r\n1.3  研究的意义 7\r\n1.4  论文研究重点内容 8\r\n1.5  本文结构介绍 8\r\n2  关键技术介绍 10\r\n2.1  Node.js技术简介 10\r\n2.2  MySql技术简介 10\r\n2.3  Weex技术简介 10\r\n2.4  MVVM思想 11\r\n3  系统需求分析 12\r\n3.1  系统整体分析 12\r\n3.2  系统功能需求分析 13\r\n3.3  系统性能需求分析 14\r\n3.4  系统可行性分析 15\r\n3.4.1 技术可行性 15\r\n3.4.2 经济可行性 15\r\n3.4.3 操作可行性 15\r\n3.5  系统开发环境 16\r\n4  系统总体设计 17\r\n4.1  系统总体架构设计 17\r\n4.2  数据库设计 18\r\n4.2.1 数据库概念模型设计 18\r\n4.2.2 数据表字段设计 19\r\n4.3 游记管理设计 21\r\n4.4 景区介绍模块设计 21\r\n4.5 景点线路推荐设计 22\r\n5  系统功能实现 23\r\n5.1 系统整体实现 24\r\n5.2 景点推荐管理实现 26\r\n5.3 住宿信息管理实现 26\r\n5.4 娱乐信息管理实现 27\r\n5.5 餐饮信息管理实现 27\r\n5.6 游记模块实现 28\r\n6  系统测试 30\r\n6.1 测试方法 30\r\n6.2 测试环境 30\r\n6.2 功能单元测试 31\r\n6.3 综合测试 32\r\n6.4 压力测试 32\r\n6.4.1  基于top命令的硬件监控测试 32\r\n6.4.2  siege性能指标测试 33\r\n6.5 测试结果分析 34\r\n7  总结与展望 35\r\n7.1 系统开发工作总结 35\r\n7.2 后续工作的展望 36\r\n参考文献 37\r\n1  绪论\r\n1.1  研究的背景\r\n现在的旅游已经成为了人们休闲的最为主要的方式，也是国民生活水平提高主要展现的方式之一。网络现在已经改变了我们的生活方式，无论是衣食住行的哪一个方面，都已经替代了传统的方式。从以前单纯的通信到如今的无现金生活方式，变化可以说是天翻地覆。而如今人们旅游的选择方式选择地点也是愈加的频繁。现在的八零后九零后零零后都是旅游的主力大军，他们早已经不满足在一个地方停留而是希望在去体验各个地方的风土人情。而乐山以其乐山大佛闻名于世，其优美的景色以及壮观的雕刻引人注目，流连忘返。\r\n1.2  国内外研究现状分析\r\n就国外而言，因为电脑以及网络是起源于他们，所以国外的人民对网络认知度是在过去几年要高于我们国内的。而其及网络各个层面的运用都是要早于国内的，国外各种类型网站应用发展较早，相关标准和法律比较规范健全。特别是欧美等地更是走在我们的前列。当我们开始熟知网络，国外的网络运用已经比较成熟了，其中颇为又代表性的公司有：TripAdvisor（是世界上最大的旅游网站。该网站包括酒店和航班预订、短期出租、餐馆、旅游信息、旅游指南、旅游评论和旅游意见、互动旅游论坛等）、雅虎旅游（Yahoo! Travel）是雅虎旗下旅游网站。该网站提供旅游指南，登记和酒店预订服务、Expedia是一个在线旅游网站，总部位于美国华盛顿州贝尔维尤。它在29个国家和地区拥有本地化分站。\r\n国内的相关网站比较起步和运营推广程度都是较为晚的，但是在传播速度以及在国内民众的接受程度上面显然是一个较为客观的情况。我国电子商务的产生从无到有，仅仅几年的时间，发展的速度却相当迅速。中国电子商务研究中心分析认为网络用户规模增长原因是：网络运营环境日趋完善与成熟；快捷方便不受地域限制；政府监管以平台环境日益成熟；网络已成融入人们的生活。这说明在中国发展电子商务有良好的群众基础，网上订购以及旅游方式日趋被大家所接受。其中不乏诞生了几家超级公司，例如途牛旅游网、携程旅游等。\r\n1.3  研究的意义\r\n研究此次课题主要是帮助外地游客能够快速了解并且认知到乐山，对于乐山的路线以及乐山的住宿、乐山的娱乐、乐山的美食以及乐山周边的购物信息等，而这些结合互联网的方式能够帮助目前大部分通过互联网了解乐山以及对于乐山具体旅游信息的介绍。提高乐山的知名度以及乐山的旅游经济效益，并且帮助乐山相关单位更加规范的管理乐山各个方面的服务。游客可以通过对于APP的使用，享受到更加快捷方便的旅游。\r\n1.4  论文研究重点内容\r\n本文在研究方向上主要是通过对于开发技术的研究以及对于乐山旅游文化的研究。包含了乐山的旅游景点，旅游景点的价格以及旅游景点的路线规划。在技术方面主要是研究对于node.js在开发系统后台的功能使用，以及对于MSYQL数据库的数据存储以及数据的调用、修改等，第三个研究点就是通过对于weex框架的使用以及打包。\r\n1.5  本文结构介绍\r\n本文的主要章节安排如下：\r\n第一章：绪论\r\n主要是讲解整个论文对于课题研究的背景，对于当前研究课题国内外的研究现状，研究此次课题的意义以及研究此课题的重点内容，还有此文章的文章结构。\r\n第二章：关键技术说明\r\n开发此系统主要是使用了Node.js进行后台开发，使用MYSQL作为数据库的存储工具，前台APP采用了WEEX框架来进行开发。所以开对于技术讲解方面会包含对Node.js的技术讲解，对于MSYQL数据库的简介，对于weex的框架简介。以及对于MVVM思想的讲解。\r\n第三章：系统需求分析\r\n在系统分析方面会对系统的整体结构进行分析，包含了对于系统的功能需求分析，系统的性能需求分析，系统的经济可行性分析，系统的操作可行性分析，系统的技术可行性分析，还有整个系统的开发环境。\r\n第四章：系统总体设计\r\n此章节将会讲解系统对于整体的设计以及各个子功能的设计，因为篇幅限制，将会主要讲解系统的几个重点功能，以及通过流程图和E-R图，系统用例图，结构图等来对系统的设计进行介绍。\r\n第五章：系统功能实现\r\n系统功能的实现主要是通过对于系统的整体实现以及对于系统的各个功能实现来进行阐述。其中包含了对于乐山景区的介绍模块、旅游信息的查询模块、旅游路线的推荐模块、个人信息模块、景区介绍管理、酒店住宿管理、餐饮店管理、娱乐模块管理、账户管理、系统发布管理、游客游记管理、路线推荐管理。并且通过对于界面的展示和对于核心代码的展示来完成。\r\n第六章：系统测试\r\n系统测试环节主要是通过对于系统的功能来进行测试，包含对于系统前台的功能测试，系统后台的功能测试。通过对于系统的功能测试以及综合测试，来检验系统没有BUG，并能够正常运行。\r\n第七章：总结\r\n此章节主要是对整个系统开发进行总结以及对于后续工作的展望。\r\n2  关键技术介绍\r\n2.1  Node.js技术简介\r\nNode.js是一个由javascript进行开发的脚本语言，主要是运用于服务端的脚本语言，通过对于javascript进行脚本封装来进行特殊的优化，并且为其提供对应的API即可以使用。但是其实质性的操作是采用Ryan Dahl来进行开发，对使用的chrome的V8版本引擎进行了封装。这个针对性的封装能够大幅度的提高javascript在对应的V8引擎中进行相应以及对于事件的驱动，Node.js是在2009年5月来进行完成第一个版本，并且快速的得到了市场的认可，因为其具有自身独特的优点，使得前端人员不用在对于后台代码进行了解就可以开发完整的系统，采用了RESTful API以及单线程的方式进行运作，在不额外新增线程的情况下来进行对于线程的并发处理，通过事件循环的方式进行操作。并且采用了非阻塞IO的特点。因为其采用的是事件驱动，所以非常适合在一些采用分布式的服务器架构上使用，也能够在数据密集的开发系统中进行实时应用。\r\n2.2  MySql技术简介\r\n在2019年2月DB-Engines发布的数据库排行榜上，MYSQL数据库以13.02的增长数据排列第二位，期排列分数为1167.29。仅仅比第一名的Oracle分数低了不到一百分，其中Oracle的分数为1264.02分。但是Oracle的时间一直都是保持的下降。通过这个数据就可以看出，MYSQL的竞争优势以及对于MYSQL的喜爱层度。许多开发者挑选MYSQL作为开发的数据管理工具，主要是因为MYSQL是一个关系型数据库，并且能够拥有标准化的SQL语言；能够支持绝大多数的编程语言的API，能够直接提供调用；还能够对不同的系统进行支持，包含了对于windows以及对于linux还有苹果的MAC OS 系统；在对于编码环境方面能够支持常见的几十种编码；除此之外还能够提供对于网络方面不同的ODBC、JDBC以及TCP和IP的相关支持，对于不同的应用场景就可以提供不同的支持，单点模式支持、复制模式、集群模式；还能够支持多线程以及全局食物标识来进行工作。开发者在使用MYSQL的时候能够自己动手修改相关的细节需求，由于其开源以及免费的特点，使得许多开发者能够自由操控自己的代码，并且随着开发者加入的欲来越多，MYSQL的社区活跃性也在不断的提高，使得大家对于MYSQL的推进做出了贡献，进行了一个良好的循环。\r\n2.3  Weex技术简介\r\nWeex是一个在2016年阿里巴巴大会上面进行发布的一款能够跨平台的移动开发工具。其开发的主要目标是为了解决在不同平台开发者需要重复进行开发的痛点，并且在每次开发的时候都能够直接适应两个平台，不必再为了开发更新以及开发显示语言和表达效果进行担心。在开发过程中，开发者只需要在开发的APP中嵌入weex的SDK就可以直接通过撰写HTML页面以及页面的CSS和javascript来进行开发，开发的效果能够与原生级别的界面相差无几，并且在相应效果上面也是毫不逊色。在开发过程中WEEX的渲染效果引擎与开发的DSL语法是分开的，所以在进行weex开发的过程中对于外部各种特定的前端框架都是不必依赖。目前开发weex对于前端的框架也作出了支持，包含来的对于Vue.js以及Rax的支持。这样做的目的是为了能够帮助开发者在开发过程中实现开发一个WEB技术就可以实现一个与原生开发效果与WEB开发效率相结合特点。\r\n2.4  MVVM思想\r\nMVVM是Model-View-ViewModel的缩写，中文名是模型-视图模型。MVVM是一种常用的软件开发模式，它强制性地使用模块中的输入、处理和输出分开，他们各自处理自己的任务，减弱了业务逻辑接口与数据接口直接的耦合度，让视图的变化更加丰富。模型（Model）表示业务数据和业务规则，它在整个层次中承担着软件大量复杂的计算，拥有最多的处理任务。比如，它可以封装数据库连接，业务数据库处理等构件，这样封装好的一个模型可以供多个视图调用。如此一来，就能提高程序中代码的重用性。视图（View）即是与用户直接交互的界面，老的Web应用程序是由HTML语言编写的界面，在新的Web应用程序中，HTML虽然依旧在视图中起着很大的作用，但一些新的技术也在不断涌出，比如XHTML、XML、JSP等语言都能充当Web应用的视图层。在视图中并没有真正的处理发生，不管这些数据存储在哪里，它只是作为一种输出数据并允许用户操作的方式。视图模型（ViewModel）主要接收用户的输入并调用模型和视图去完成用户的要求，因此在点击Web页面的超链接和发送HTML表单时，控制器本身不输出任何东西，也不做任何处理。它只是接收请求然后再决定调用那个模型组件去处理请求，然后再决定由哪个视图来显示返回的数据。MVVM既有许多优点，也有缺点。它的优点主要表现在各种模块的耦合性低、代码重用性高、利于分工开发、可维护性高、有利于软件工程化管理等。\r\n3  系统需求分析\r\n3.1  系统整体分析\r\n为了完成对于乐山智慧旅游APP的开发，采用sublime编辑器作为开发工具，使用Node.js来作为后端开发，使用MYSQL作为数据库存储工具。在对于前端开发APP的方面，将会采用weex作为前台开发的框架，然后完成一个跨平台的移动APP系统，这个系统主要包含了前台以及后台。其中前台是提供给用户使用，功能主要是分为了四个大的模块，包含了对于乐山景区的介绍模块，旅游信息的查询模块，旅游路线的推荐模块，个人信息模块。后台主要是通过对于前台所有信息的一个管理，提供给管理员使用，包含了对于景区介绍管理、酒店住宿管理、餐饮店管理、娱乐模块管理、账户管理、系统发布管理、游客游记管理、路线推荐管理。通过这些功能实现一个能够帮助游客在乐山游玩时提供帮助的APP旅游系统。\r\n3.2  系统功能需求分析\r\n在整个系统开发过程主要分为两个板块，第一个板块主要是提供给系统的前台用户使用，用户可以注册成为系统用户，然后登陆进行对于账号信息等完善，通过对于乐山景区信息的查看，乐山酒店住宿信息的查看，乐山餐饮信息的查看，乐山娱乐信息的查看，旅游路线的推荐模块，个人信息模块管理，游记添加以及分享等功能。前台用户用例图如下图3.1所示：\r\n图3.1  前台用户用例图\r\n对整个系统的前台用户用例图画完之后，系统的后台主要是提供给管理员使用。包含了对于景区介绍管理、酒店住宿管理、餐饮店管理、娱乐模块管理、账户管理、系统发布管理、游客游记管理、路线推荐管理等功能，对其详细使用的管理员用户用例图如下3.2所示：\r\n图3.1  管理员用户用例图\r\n3.3  系统性能需求分析\r\n对于此次开发课题的性能方面，主要是依据相关的设计规则来进行性能需求的一个划定，其中一个针对客户的网络上使用的系统，设计到的性能方面要必须保证用户能够简单易懂的就能够实现操作，在系统的使用中保证系统能够正常运行，系统没有漏洞攻击，安全性得到保证，在系统响应方面能够具有快捷，有效的特点。故此相关的设计需求如下表3.1所示：\r\n表3.1系统性能需求\r\n类别 叙述简单性 系统操作简单易懂安全性 系统安全运行无漏洞敏捷性 系统响应具有高效率的特性简单性：在实现系统的功能的同时，尽量让系统操作简单易懂，这对于一个系统来说是非常重要的。故此对于用户来说只需要下载APP进行使用即可，我国目前已经是智能手机最大使用量国家，基本上人手一部智能手机，故此在操作APP没有难度。\r\n安全性：系统在开发过程中主要是通过MYSQL进行数据的创建，在对用户信息的进行加密处理，在于前后台的数据交换都是使用的接口来进行操作，并且对其进行特定的约束，采用token的方式来进行。\r\n实用性：系统的开发完成能够直接提供给安卓以及IOS系统手机使用，开发的实用性非常，而且采用weex进行开发非常的快捷，开发完成之后也具有原生开发级别的效果。在系统开发的基础上非常完善，在系统的功能上也提供了非常多的前台功能以及后台功能。\r\n3.4  系统可行性分析\r\n3.4.1 技术可行性\r\n在系统开发方面采用的相关语言是node.js，是非常成熟的开发语言和开发框架，已经能够胜任常规开发状况，并且在系统使用的数据库也是采用了多平台、多线程的关系型数据库MYSQL，前台开发采用WEEX这些都是具有非常多的开发者活跃的语言以及工具。在开发时能够与其进行交流，并且相关的开发语言和开发工具在学校已经学习过，有一定的系统开发经验，并且指导老师能够直接帮助我们解答难题。在技术层面是具有可行性的。\r\n3.4.2 经济可行性\r\n由于本系统是一个乐山旅游系统，整个网站是不是太大，所涉及的到开发成本就相应的降低了。整个开发过程由自己完成，但只有一台PC机和各种软件，可以实现所有的开发任务。因为本次系统的开发是基于软件的，所以就免去了在硬件方面的成本，而且此次开发系统使用的各个软件还有一个优点就是开源。在使用成本，用户只需要具有连接到互联网的计算机上，通过注册就可以在世界的任何一个角落使用本系统的所有功能和服务。而对于电脑硬件的要求不是很高，该软件有没有特殊需求，方便地访问和使用。因此，从经济可行性分析的角度，系统地反映了经济利益和强大的功能。\r\n3.4.3 操作可行性\r\n在对于系统的操作可行性方面，系统主要是分为两个部分的操作。第一个部分的系统操作可行性主要是系统的用户使用，系统用户通过下载安装乐山智慧APP就可以在智能手机上进行使用，这种使用的方式非常的常见，不需要用户进行额外的学习成本。对于系统后台采用了b-s架构的后台管理系统。这可以帮助管理员直接在电脑上进行操控，所以在操作可行性方面具备。\r\n3.5  系统开发环境\r\n系统的开发和运行环境主要是分为作为服务器的硬件设施，此处采用的是自己的笔记本电脑，整个系统需要运行的时候的开发和运行软件环境配置如下标3.1和表3.2所示：\r\n表3.1硬件配置环境\r\n品类 参数操作系统 预装Windows 10 Home Basic 64bit（64位家庭普通版）处理器 Intel 酷睿i7 8750H 2.2GHz 六核心/十二线程主板 HUANAN H61 （ H61 芯片组 ）内存 16GB  DDR4 2666MHz主硬盘 混合硬盘（SSD+5400转HDD）256GB+1TB显卡 NVIDIA GeForce GTX 1060 Max-Q显示器  FHD，LED背光，IPS防眩光屏，45%色域声卡 英特尔 Display Audio @ 英特尔 6 Series Chipset  高保真音频网卡 支持802.11ac无线协议，支持双频（2.4GHz+5GHz）\r\n表3.2软件配置环境\r\n品类 参数后台开发语言 Node.js前端框架 Weex数据库 MYSQL5.6编译器 Sublime text\r\n4  系统总体设计\r\n4.1  系统总体架构设计\r\n此次开发主要是基于Node.js来作为后端开发，使用MYSQL作为数据库存储工具。在对于前端开发APP的方面，将会采用weex作为前台开发的框架，然后完成一个跨平台的移动APP系统。通过对于这些技术的使用完成了具有前后台功能的乐山只会旅游APP系统，这个系统主要包含了前台以及后台。其中前台是提供给用户使用，功能主要是分为了四个大的模块，包含了对于乐山景区的介绍模块，旅游信息的查询模块，旅游路线的推荐模块，个人信息模块。后台主要是通过对于前台所有信息的一个管理，提供给管理员使用，包含了对于景区介绍管理、酒店住宿管理、餐饮店管理、娱乐模块管理、账户管理、系统发布管理、游客游记管理、路线推荐管理。通过这些同能实现一个能够帮助游客在乐山游玩时提供帮助的APP旅游系统。整体架构设计图如下图4.1所示：\r\n图4.1  系统整功能体架模块构图\r\n图4.2  系统架构图\r\n4.2  数据库设计\r\n4.2.1 数据库概念模型设计\r\n数据库的概念模型设计主要是帮助对于数据库进行更好的数据库表的设计以及对于不同表的字段进行设计，在此处为了能够更好的展现其设计，将会通过E-R图模型的方式来进行完成，这里将部分实体的E-R图模型构建如下图所示：\r\n图4.2 景点实体属性E-R分图\r\n图4.3 游记实体属性E-R分图\r\n4.2.2 数据表字段设计\r\n完成对于数据库概念模型的设计之后，对于数据库中字段的设计就会容易许多，其中在进行数据库的字段设计时主要是满足低内聚高耦合的设计规则，尽量避免数据库中数据的冗余和多于数据的存储，对于此次系统的开发，现将一些数据表的设计展现如下所示：\r\n（1）景点信息表，用于存储景点相关的相关信息。\r\n表4.1景点信息表\r\n字段名 字段类型 长度 主键/外键 字段值约束 说明id int 11 P NOT NULL 自增IDdes VARCHAR 20  DEFAULT NULL 描述img VARCHAR 32  DEFAULT NULL 景点图片name VARCHAR 100  DEFAULT NULL 景点名称price float （8,2）  DEFAULT NULL 门票价格address VARCHAR 255  DEFAULT NULL 位置interest VARCHAR 255  DEFAULT NULL 兴趣爱好\r\n（2）游记信息表，用来存储游记消息。相关信息如下表4.2所示：\r\n表4.2 游记信息表\r\n字段名 字段类型 长度 主键/外键 字段值约束 说明id int 11 P NOT NULL 自增IDcontent Text   DEFAULT NULL 内容img VARCHAR 255  DEFAULT NULL 图片u_id VARCHAR 255  DEFAULT NULL 发布人idcreate_time VARCHAR 255  DEFAULT NULL 发布时间title VARCHAR 255  DEFAULT NULL 标题（3）游记评论表，对于游记广场发布的游记信息，可以进行评论，同时还可以对别人评论的消息进行评论。相关信息如下表4.3所示：\r\n表4.3 游记评论信息表\r\n字段名 字段类型 长度 主键/外键 字段值约束 说明id int 11 P NOT NULL 自增IDt_id Int 11  DEFAULT NULL 游记IDcontent VARCHAR 255  DEFAULT NULL 评论内容create_time VARCHAR 11  DEFAULT NULL 评论时间f VARCHAR 32  DEFAULT NULL 评论人t int 32  DEFAULT NULL 接收人ID\r\n4.3 游记管理设计\r\n游记管理主要是前台提供给用户使用，前台用户在前台上面进行注册登陆就可以对景点信息进行查看，然后可以发布相关的游记，游记方式主要是通过发布图片以及发布文字内容以及游记标题来进行。在前台发布之后，其他游客可以对其发布的游记进行评论，也可以对别人的评论进行回复。后台可以对其进行管理。能够对游客发布的游记进行删除操作。这一目的是为了能够确保在游记中不会出现一些不友好或者敏感信息。相关设计流程图如下4.4所示：\r\n图4.4 游记管理设计流程图\r\n4.4 景区介绍模块设计\r\n景区介绍模块主要是分为前台对于进去信息的查看，以及后台对于景区进行的管理。前台用户注册登陆之后，就可以对APP中首页信息进行查看，首页中可以看到景点，餐饮，娱乐以及住宿消息。前台用户可以点击相关的需求信息进行查看，主要是以图文的形式进行展现。后台管理员可以对景区信息删除。相关的时序图如下4.5所示：\r\n图4.5 景区介绍模块时序图\r\n4.5 景点线路推荐设计\r\n系统的景点推荐将会采用对于用户对不同的进行属性来进行个性化的推荐，主要是采用在后台对进行信息进行设定，例如设定一条名胜古迹多或者宁静等属性，然后来设置线路。用户在前台就可以对当前的景点推荐来进行属性选择，系统会自动依据景点的属性从数据库中获取对应的进行信息进行展现。后台可以对景点推荐进行管理，包括了对其进行添加和删除。相关设计流程图如下4.6所示：\r\n图4.6 景点线路推荐设计流程图\r\n5  系统功能实现\r\n5.1 系统整体实现\r\n系统此次实现主要分为了两个大的模块实现，第一个模块就是实现用户的前台APP模块，第二个模块就是实现管理员的后台管理。其中前台用户实现的模块是注册登陆，进入APP之后又分为三个大的模块，其中第一个模块是首页，主要是展现了系统的娱乐、餐饮、景点、住宿等信息，第二个为游记信息，提供的是游记广场，能够发布游记或者对游记进行评论和对评论信息进行回复，最后为景点推荐功能，景点推荐功能。而后台主要是提供给管理员使用，功能包含了对于系统的景点管理、住宿管理、餐饮信息管理、娱乐信息管理、兴趣分类管理、用户管理等功能。实现效果如下图5.1以及5.2所示：\r\n图5.1  系统前台实现效果图\r\n图5.2  系统后台实现效果图\r\n5.2 景点推荐管理实现\r\n景点推荐管理模块主要是分为了两个，第一个就是对系统进行景点的信息属性分类，先向系统中添加一个兴趣分类组，第二个就是对系统进行景点信息管理的时候选择景点信息的属性，然后填写景点的信息，提交之后用户在前台就可以查看到景点信息，也可以依据当前景点的属性进行景点信息推荐。实现效果如下图5.3所示：\r\n图5.3  景点信息实现效果图\r\n5.3 住宿信息管理实现\r\n住宿信息在后台进行添加，系统主要是在后台添加住宿的酒店名称以及商家信息的介绍和住宿信息的图片，在后台添加之后前台就可以进行查看，后台管理管理也可以对其进行信息删除操作。实现效果如下图5.4所示：\r\n图5.4  住宿信息管理实现效果图\r\n5.4 娱乐信息管理实现\r\n娱乐信息主要是包含对于娱乐信息的名称以及对于娱乐信息的介绍，然后可以选择对于娱乐信息的图片进行上传。后台上传后可以对信息进行查看以及删除，前台主要是通过对于信息的查看。实现效果如下图5.4所示：\r\n图5.5  娱乐信息管理实现效果图\r\n5.5 餐饮信息管理实现\r\n餐饮模块在后台添加主要添加信息包含有店铺名称、店铺介绍、地理位置、人均消费以及对于店铺图片的上传，通过这些操作来进行对于餐饮信息的构建，后台添加信息之后可以对信息进行删除，用户在前台就可以通过图文信息的方式来进行查看。实现效果如下图5.6所示：\r\n图5.6  餐饮信息管理实现效果图\r\n5.6 游记模块实现\r\n系统游记模块主要是通过用户在前台进行游记的添加，包含填写标题、内容、以及游记图片。填写好之后通过接口的形式把信息发送到接口然后处理完成到数据库中，前台页面刷新就直接进行查看，以及发布新游记。在查看游记的时候可以对前台的游记信息进行评论，用户也可以对评论的信息进行回复。相关实现效果如下图5.7所示：\r\n图5.7  系统游记模块实现效果图\r\n6  系统测试\r\n6.1 测试方法\r\n此次测试方法主要是采用白盒测试方法以及采用功能测试方法来进行测试，主要的操作方式是以此次开发系统的逻辑来进行数据的构建来进行测试。这种测试能够在系统开发结束之后对开发的项目进行各个功能的完整测试，也能够依据当前获取到或者输入的信息进行测试，用来检测系统有无BUG的存在和与设计不想符合的地方。\r\n6.2 测试环境\r\n此次测试主要是在windows7环境下进行系统的功能测试，对于整个系统的测试环境参数详细罗列如下表所示：\r\n表6.1测试环境\r\n品类 参数操作系统 预装Windows 10 Home Basic 64bit（64位家庭普通版）处理器 Intel 酷睿i7 8750H 2.2GHz 六核心/十二线程主板 HUANAN H61 （ H61 芯片组 ）内存 16GB  DDR4 2666MHz主硬盘 混合硬盘（SSD+5400转HDD）256GB+1TB显卡 NVIDIA GeForce GTX 1060 Max-Q显示器  FHD，LED背光，IPS防眩光屏，45%色域声卡 英特尔 Display Audio @ 英特尔 6 Series Chipset  高保真音频网卡 支持802.11ac无线协议，支持双频（2.4GHz+5GHz）\r\n6.2 功能单元测试\r\n系统功能测试主要是对系统的各个角色功能进行测试，其中主要测试的方式是按照系统模拟一个用户在前台进行注册之后对系统前台的功能使用，以及后台管理员在后台对所有功能进行管理的方式来完成。相关详的测试如下表5-1所示：\r\n表5-1  系统功能测试\r\n测试内容 测试结果景点管理 管理员后台能够对系统的景点进行添加以及删除住宿信息管理 系统管理员能够对住宿信息进行增加、删除娱乐信息管理 系统管理员能够对娱乐信息进行增加、删除餐饮信息管理 管理员能够添加餐饮信息并且对其进行管理游记模块管理 药房管理员能够创建药品分类景点推荐 药房管理员能够对药品详情增删改查账户管理 管理员可以对账号进行删除景点类型管理 可以景点类型进行添加图片上传 系统能够上传图片并且存储在服务器指定地址注册登陆 系统前台可以注册账号并且登陆\r\n6.3 综合测试\r\n系统的综合性测试主要是针对系统的显示样式，包含了页面需要加载的动画、HTML、javascript和一些图片资源，同时还需要检测相关页面是否在不同的浏览器中显示的样式是否一样，点击前台页面的相关链接以及点击前台页面的一些操作按钮以用来确保系统的正确性，按照系统流程进行正反性测试，即确定、取消测试，来达到对综合性测试的结果，相关测试结果如下表5-2所示：\r\n表5-2  系统中和测试\r\n测试内容 测试结果系统资源加载情况 能够正确的加载HTML、CSS、JS、图片网页系统兼容性 能够兼容目前主流的火狐、谷歌浏览器系统操作按钮点击 各个角色能够正常点击相关按钮实现跳转以及功能实现接口数据 系统前台后台与数据库的数据交互正常相关技术 AJAX能够传递，能够提交\r\n6.4 压力测试\r\n6.4.1  基于top命令的硬件监控测试\r\nTop是一个基于动态显示的过程，主要是通过用操作按键来不断的获取当前的状态情况，如果开始执行程序，那么它将对前台资源进行独占，直到用户停止操作或者退出程序。这一特点将会实时监控系统处理状态。对于其使用的内存以及对任务时间进度表任务排序如下图6.1所示：\r\n图6-1 top命令监控图\r\n6.4.2  siege性能指标测试\r\n通过使用siege性能指标来进行测试，可以看出系统能够承受的压力情况，通过测试得到测试结果如下图6.2所示：\r\n图6-2 siege性能测试指标图\r\n6.5 测试结果分析\r\n系统测试是完成一个系统必不可少的一步，现在讲对系统进行功能测试以及安全性测试，以及可用性测试。相对于之前的开发，测试才算检验系统是否符合标准，能不能够在使用过程中不出错，界面友好，系统运行稳定等一系列要数。测试时通常会通过相对公认的标准来对系统进行测试，而不是普遍大众认为的找出系统的错误。通过一些标准来对系统进行测试能够在系统测试的时间，系统测试的质量，系统测试的效率方面，都能够大幅度的提升。本章节我们完成了相关的系统测试，讲解了系统测试的重要关注点。正确的解释并且详细的提供了测试的方法以及测试的数据。对上述测试结果进行分析，看出来系统在单元测试中，各个子功能完成正常，在对系统进行综合测试时，系统会通过整体的连贯数据操作进行完成。不存在BUG以及相关的逻辑漏洞，通过压力等性能测试可以看出系统在压力测试值前表现良好，可以确定平台是一个规范、可靠、其安全的系统。\r\n7  总结与展望\r\n7.1 系统开发工作总结\r\n毕业设计是一个真正踏入社会之前，学校留给我们最后的一块磨刀石，锻造佩剑的最后一道开锋工序。在此次写作毕业设计中，我学会到了怎么样才能够使用一些学校的知识，将其运用到实际的开发当中。例如使用一个框架，如何做到界面美观，传递数据时使用的相关技术，操作界面的时候局部刷新，页面分页以及数据库构建，怎么样在浩瀚的网络中找到我们需要参考的资料，怎么样与老师沟通协作，怎么样对数据库的架构进行构建。这些都是难能可贵的经验，经过这些时间的开发最后完成需求，完成了一个具有前后台功能的乐山只会旅游APP系统，这个系统主要包含了前台以及后台。其中前台是提供给用户使用，功能主要是分为了四个大的模块，包含了对于乐山景区的介绍模块，旅游信息的查询模块，旅游路线的推荐模块，个人信息模块。后台主要是通过对于前台所有信息的一个管理，提供给管理员使用，包含了对于景区介绍管理、酒店住宿管理、餐饮店管理、娱乐模块管理、账户管理、系统发布管理、游客游记管理、路线推荐管理。通过这些同能实现一个能够帮助游客在乐山游玩时提供帮助的APP旅游系统。\r\n7.2 后续工作的展望\r\n完成一个系统之后让我认识到了如何讲书本中的知识运用到实际的开发中，这需要不断的实践以及学习如何解决在课本中没有遇到过的困难。这让我明确到无论是在以前的学习中还是在后期生活或者是工作中，都需要我们不断的学习进步以及实践。后续的工作都需要不断的熟悉以及学习。在整个的后续工作中主要是通过对于之前开发的暴露问题进行反馈以及弥补短板，其中最为主要的问题是采用AJAX的方式来进行数据交互以及对于服务器的相关知识还了解甚少，其中服务器方面主要是对于如何搭建一个服务器环境以及通过大家服务器环境对服务器进行管理，包含FTP以及使用命令行来进行对于服务器的数据操作和相关的插件安装，一些路径的权限设置等。而对于异步传输数据方面，采用的方式以及传递数据之后处理的反馈信息，以及最为重要的父子页面进行传值的问题，都是后面需要更好的使用以及学习的。\r\n参考文献\r\n[1]杨雨佳.移动Web前端开发新技术HTML5探析[J].中国新通信,2019(03):14.\r\n[2]苏芝,李茹.基于HTML5的船舶智能监控系统软件界面自适应实现[J].上海船舶运输科学研究所学报,2018,41(04):34-38.\r\n[3]魏巍巍.基于HTML5的Web富客户端网页设计方法[J].产业与科技论坛,2019,18(03):63-64.\r\n[4]Na Wu. The Application of “Divided Class” Teaching Mode in HTML5 Development Course[A]. Institute of Management Science and Industrial Engineering.Proceedings of 2018 6th International Education,Economics,Social Science,Arts,Sports and Management Engineering Conference(IEESASM 2018)[C].Institute of Management Science and Industrial Engineering:计算机科学与电子技术国际学会(Computer Science and Electronic Technology International Society),2018:4.\r\n[5]呙森林,张玺.Weex跨平台开发方案研究与应用[J].信息通信,2017(04):112-113.\r\n[6]旷志光,纪婷婷,吴小丽.基于Vue.js的后台单页应用管理系统的研究与实现[J].现代计算机(专业版),2017(30):51-55.\r\n[7]陈岩.轻量级响应式框架Vue.js应用分析[J].中国管理信息化,2018,21(03):181-183.\r\n[8]邓雯婷.基于Vue.js构建单页面GIS应用的方法研究[J].科技创新与应用,2018(14):5-7+10.\r\n[9]王辰,刘晓鑫,曹晓燕,王佳楠.基于Vue.js平台的Markdown标记语言插件的研究与实现[J].科技风,2018(35):82+85.\r\n[10]汪彤. 基于Node.js的图书共享平台的设计与实现[D].北京邮电大学,2018.\r\n[11]王志任. 基于Vue.js的开发平台的设计与实现[D].广东工业大学,2018.\r\n[12]Shuguang Yuan,H.C. Stephen Chan,Zhenquan Hu. Implementing WebGL and HTML5 in Macromolecular Visualization and Modern Computer-Aided Drug Design[J]. Trends in Biotechnology,2017,35(6).\r\n[13]Raúl Tabarés Gutiérrez. Understanding the role of digital commons in the web; The making of HTML5[J]. Telematics and Informatics,2018,35(5).\r\n";
+        similarFragments = similarFragments.reverse();
+
+        // bar2BeginPosition
+        var bar2BeginPosition = htmlContent.length;
+
+        _.forEach(similarFragments, function (similarFragment, index) {
+            var article = data.recordList[similarFragment.recordIndex];
+
+            var hasBanquan = true;
+            var hasBanquanKV = _.find(article.dataBaseInfoMap, function (item) { return item.key == '有无版权' });
+            if (!hasBanquanKV || hasBanquanKV.value != "1") {
+                hasBanquan = false;
+            }
+
+            if (article.DBID == "报纸") {
+                hasBanquan = true;
+            }
+
+            similarFragment.hasBanquan = hasBanquan;
+
+            // 判断类型
+            var textClass =
+                article.isReference ? 'text-reference' : (
+                    article.isPublishedSelfCited ? 'text-published' : (
+                        article.isUnPublishedSelfCited ? 'text-degree' : 'text-others'
+                    ));
+
+            if (article.isUnPublishedSelfCited) {
+                if (isPublished) {
+                    textClass = 'text-degree';
+                }
+                else {
+                    textClass = 'text-others';
+                }
+            }
+
+            var foo = htmlContent.substr(0, similarFragment.beginPosition);
+            //var text = htmlContent.substr(similarFragment.beginPosition, similarFragment.length);
+            text = getCharText(htmlContent, similarFragment, textClass);
+            var bar = htmlContent.substring(similarFragment.beginPosition + similarFragment.length, bar2BeginPosition);
+            var bar2 = htmlContent.substring(bar2BeginPosition);
+
+            //
+            //text = $("<div>").text(text).html();
+            bar = $("<div>").text(bar).html();
+
+            // 拼接
+            htmlContent = foo + '<span data-index="' + similarFragment.index + '">' + text + suffix + bar + bar2;
+
+            //similarFragment.fragmentPercent = (similarFragment.hitText.length / similarFragment.length * 100).toFixed(2);
+            //similarFragment.hitText = similarFragment.hitText.replace(/\r\n/g, '<br />').replace(/\n/g, '<br />').replace(/\r/g, '<br />');
+
+            // right
+            similarFragment.hitText1 = "";
+            for (var pos = 0; pos < similarFragment.hitLength; pos++) {
+                if (similarFragment.similarChars.indexOf(similarFragment.hitBeginPosition + pos) != -1) {
+                    similarFragment.hitText1 += '<span style="display:inline-block" class=text-others>' + similarFragment.hitText[pos] + '</span>';
+                }
+                else {
+                    similarFragment.hitText1 += similarFragment.hitText[pos];
+                }
+            }
+            similarFragment.hitText = similarFragment.hitText1.replace(/\r\n/g, '<br />').replace(/\n/g, '<br />').replace(/\r/g, '<br />');
+
+            bar2BeginPosition = similarFragment.beginPosition;
+        });
+        similarFragments = similarFragments.reverse();
+
+        htmlContent = htmlContent.replace(/\r\n/g, '<br />').replace(/\n/g, '<br />').replace(/\r/g, '<br />');
+
+        $('#fulltext').html(htmlContent);
+
+        $('#fulltext').on('click', 'span', function () {
+            var fragment = $(this);
+
+            var length = $(".text-highlight").length;
+            if (length > 0) {
+                $(".text-highlight").removeClass("text-highlight");
+            }
+
+            // 高亮
+            fragment.addClass('text-highlight');
+
+            var index = fragment.data('index');
+            var similarFragment = similarFragments[index];
+            viewModel.SimilarFragment(similarFragment);
+
+        })
+        //    .on('mouseout', 'span', function(){
+        //    var fragment = $(this);
+
+        //    // 高亮
+        //    fragment.removeClass('text-highlight');
+        //});
+
+
+        function getCharText(content, similarFragment, textClass) {
+            var positionArray = similarFragment.originalChars;
+
+            var text = '';
+            var flag = false;
+            for (var i = similarFragment.beginPosition; i < similarFragment.beginPosition + similarFragment.length; i++) {
+                if (positionArray.indexOf(i) != -1) {
+                    if (flag == true) {
+                        text += $("<div>").text(content[i]).html();
+                    }
+                    else {
+                        text += '<span class="' + textClass + ' active" style="cursor:pointer;">' + $("<div>").text(content[i]).html();
+                        flag = true;
+                    }
+                }
+                else {
+                    if (flag == true) {
+                        text += '</span>' + $("<div>").text(content[i]).html();
+                        flag = false;
+                    }
+                    else {
+                        text += $("<div>").text(content[i]).html();
+                    }
+                }
+            }
+
+            if (flag == true) {
+                text += '</span>';
+            }
+
+            similarFragment.originalChars.reverse();
+
+            return text;
+        }
+    </script>
+
+
+</body>
+</html>

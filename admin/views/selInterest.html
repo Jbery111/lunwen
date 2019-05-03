@@ -1,0 +1,51 @@
+<%-include public/header.html %>
+
+   
+<h3>所有兴趣分类</h3>
+<hr class="layui-bg-green">
+<table class="layui-table">
+    <colgroup>
+      <col>
+      <col>
+      <col>
+    </colgroup>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>分类名</th>
+        <th>操作</th>
+      </tr> 
+    </thead>
+    <tbody>
+        <% data.forEach(function(items,index){%>
+            <tr>
+                <td><%=items.id %></td>
+                <td><%=items.con%></td>
+                <td><button class="layui-btn layui-btn-danger layui-btn-xs" data-id="<%=items.id %>" >删除</button></td>
+            </tr>
+        <% }) %>
+    </tbody>
+  </table>
+ 
+<%-include public/footer.html %>
+<script>
+    
+  $('.layui-btn').click(function() {
+    console.log(1)
+    let id = $(this).attr('data-id');
+    layui.use(['layer','jquery'],()=>{
+      let $ = layui.jquery;
+      let layer = layui.layer;
+      $.ajax({
+        url:"/delInter",
+        data:{id:id},
+        success(res) {
+          layer.msg(res.msg,{time:3000},function() {
+            window.location.reload();
+          });
+        }
+      })
+    })
+  })
+    
+</script>

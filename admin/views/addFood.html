@@ -1,0 +1,52 @@
+<%-include public/header.html %>
+<h3>添加餐饮信息</h3>
+<hr class="layui-bg-green">
+<link rel="stylesheet" href="public/layui/css/layui.css">
+
+<form class="layui-form" action="/addFoods" method="post" enctype="multipart/form-data">
+  <div class="layui-form-item layui-form-text">
+      <label class="layui-form-label">店铺名称</label>
+      <div class="layui-input-block">
+        <input name="name" required placeholder="请输入名称" class="layui-input"/>
+      </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+      <label class="layui-form-label">店铺介绍</label>
+      <div class="layui-input-block">
+        <textarea name="des" required placeholder="请输入介绍" class="layui-textarea"></textarea>
+      </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+      <label class="layui-form-label">位置</label>
+      <div class="layui-input-block">
+        <input required name="address"  class="layui-input"/>
+      </div>
+  </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">人均消费</label>
+        <div class="layui-input-block">
+          <input required type="number" name="price"  class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">店铺图片</label>
+        <div class="layui-input-block">
+          <input required type="file" name="img"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+      </div>
+    </div>
+</form>
+<%-include public/footer.html %>
+<script>
+layui.use('layer',()=>{
+  let layer = layui.layer;
+  let tip = "<%=tip %>";
+  if(tip == 1) {
+    layer.msg('添加成功');
+  }
+})
+</script>

@@ -1,0 +1,55 @@
+<%-include public/header.html %>
+
+   
+<h3>待审核</h3>
+<hr class="layui-bg-green">
+<table class="layui-table">
+    <colgroup>
+      <col>
+      <col>
+      <col>
+    </colgroup>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>标题</th>
+        <th>图片</th>
+        <th>内容</th>
+        <th>发布时间</th>
+        <th>操作</th>
+      </tr> 
+    </thead>
+    <tbody>
+      
+        <% data.forEach(function(items,index){%>
+            <tr>
+                <td><%=items.id %></td>
+                <td><%=items.title%></td>
+                <td><img src="<%=items.img %>" style="width: 100px;height: 50px;" alt=""></td>
+                <td><%=items.content %></td>
+                <td><%= moment(items.createTime).format('YYYY-MM-DD hh:mm:ss') %></td>
+                <td><button class="layui-btn layui-btn-danger layui-btn-xs" data-id="<%=items.id %>" >通过审核</button></td>
+            </tr>
+        <% }) %>
+    </tbody>
+  </table>
+ 
+<%-include public/footer.html %>
+<script>
+    $('.layui-btn').click(function() {
+      let id = $(this).attr('data-id');
+      layui.use(['layer','jquery'],()=>{
+        let $ = layui.jquery;
+        let layer = layui.layer;
+        $.ajax({
+          url:"/allow",
+          data:{id:id},
+          success(res) {
+            layer.msg(res.msg,{time:3000},function() {
+              window.location.reload();
+            });
+          }
+        })
+      })
+    })
+</script>

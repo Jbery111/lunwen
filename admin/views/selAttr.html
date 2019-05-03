@@ -1,0 +1,61 @@
+<%-include public/header.html %>
+
+   
+<h3>所有景点</h3>
+<hr class="layui-bg-green">
+<table class="layui-table">
+    <colgroup>
+      <col width="150">
+      <col width="200">
+      <col>
+    </colgroup>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>景点名称</th>
+        <th>图片</th>
+        <th>描述</th>
+        <th>门票价格</th>
+        <th>地址</th>
+        <th>操作</th>
+      </tr> 
+    </thead>
+    <tbody>
+      
+        <% data.forEach(function(items,index){%>
+            <tr>
+                <td><%=items.id %></td>
+                <td><%=items.name%></td>
+                <td><img src="<%=items.img %>" style="width: 100px;height: 50px;" alt=""></td>
+                <td><%=items.des %></td>
+                <td><%=items.price %></td>
+                <td><%=items.address%></td>
+                <td><button class="layui-btn layui-btn-danger layui-btn-xs" data-id="<%=items.id %>" >删除</button></td>
+            </tr>
+        <% }) %>
+    </tbody>
+  </table>
+ 
+<%-include public/footer.html %>
+<script>
+    
+    $('.layui-btn').click(function() {
+      let id = $(this).attr('data-id');
+      layui.use(['layer','jquery'],()=>{
+        let $ = layui.jquery;
+        let layer = layui.layer;
+        $.ajax({
+          url:"/delAttr",
+          data:{id:id},
+          success(res) {
+            layer.msg(res.msg,{time:3000},function() {
+              window.location.reload();
+            });
+          }
+        })
+      })
+    })
+      
+  
+   
+</script>

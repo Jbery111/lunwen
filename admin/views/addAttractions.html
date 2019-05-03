@@ -1,0 +1,62 @@
+<%-include public/header.html %>
+<link rel="stylesheet" href="public/layui/css/layui.css">
+<h3>添加景点信息</h3>
+<hr class="layui-bg-green">
+<form class="layui-form" action="/addAttr" method="post" enctype="multipart/form-data">
+    <div class="layui-form-item layui-form-text">
+      <label class="layui-form-label">景点名称</label>
+      <div class="layui-input-block">
+        <input name="name" required placeholder="请输入名称" class="layui-input"/>
+      </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+      <label class="layui-form-label">景点位置</label>
+      <div class="layui-input-block">
+        <input name="address" required placeholder="请输入位置" class="layui-input"/>
+      </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+      <label class="layui-form-label">门票价格</label>
+      <div class="layui-input-block">
+        <input name="price" type="number" required placeholder="请输入价格" class="layui-input"/>
+      </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+      <label class="layui-form-label">景点介绍</label>
+      <div class="layui-input-block">
+        <textarea name="des" required placeholder="请输入介绍" class="layui-textarea"></textarea>
+      </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">景点图片</label>
+        <div class="layui-input-block">
+          <input required type="file" name="img"/>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">兴趣分类</label>
+        <div class="layui-input-block">
+          <select name="inter" lay-verify="required">
+            <option value=""></option>
+            <% data.forEach(function(items,index){%>
+            <option value="<%=items.con%>"><%=items.con%></option>
+            <% }) %>
+          </select>
+        </div>
+      </div>
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+      </div>
+    </div>
+</form>
+<%-include public/footer.html %>
+<script>
+layui.use(['layer','form'],()=>{
+  let layer = layui.layer;
+  let tip = "<%=tip %>";
+  if(tip == 1) {
+    layer.msg('添加成功');
+  }
+})
+</script>
